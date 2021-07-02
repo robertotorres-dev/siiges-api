@@ -10,7 +10,7 @@ var Users = function (usuarios) {
   this.updated_at = new Date();
 };
 
-usuarios.create = function (newEmp, result) {
+Users.create = function (newEmp, result) {
   dbConn.query("INSERT INTO usuarios set ?", newEmp, function (err, res) {
     if (err) {
       console.log("error: ", err);
@@ -23,7 +23,7 @@ usuarios.create = function (newEmp, result) {
   });
 };
 
-usuarios.findById = function (id, result) {
+Users.findById = function (id, result) {
   dbConn.query("Select * from usuarios where id = ? ", id, function (err, res) {
     if (err) {
       console.log("error: ", err);
@@ -34,7 +34,7 @@ usuarios.findById = function (id, result) {
     }
   });
 };
-usuarios.findAll = function (result) {
+Users.findAll = function (result) {
   dbConn.query("Select * from usuarios", function (err, res) {
     if (err) {
       console.log("error: ", err);
@@ -47,7 +47,7 @@ usuarios.findAll = function (result) {
   });
 };
 
-usuarios.update = function (id, usuarios, result) {
+Users.update = function (id, usuarios, result) {
   dbConn.query("UPDATE usuarios SET usuario=?,contrasena=?,token_notificaciones=? WHERE id = ?", [usuarios.usuario, usuarios.contrasena, usuarios.token_notificaciones, id], function (err, res) {
     if (err) {
       console.log("error: ", err);
@@ -58,7 +58,7 @@ usuarios.update = function (id, usuarios, result) {
   });
 };
 
-usuarios.delete = function (id, result) {
+Users.delete = function (id, result) {
   dbConn.query("DELETE FROM usuarios WHERE id = ?", [id], function (err, res) {
     if (err) {
       console.log("error: ", err);
@@ -70,4 +70,4 @@ usuarios.delete = function (id, result) {
   });
 };
 
-module.exports = Usuarios;
+module.exports = Users;
