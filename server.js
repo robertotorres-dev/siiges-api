@@ -15,14 +15,14 @@ app.use(bodyParser.json())
 
 // define a root route
 app.get('/', (req, res) => {
-  res.send("Hello World");
+  res.send("Conexión exitosa");
 });
 
-// Require usuario routes
-const usuarioRoutes = require('./src/routes/usuarios.route')
+// Require routes
+const usuariosRoutes = require('./src/routes/usuario.usuarios.route')
 
 // using as middleware
-app.use('/api/v1/usuario', usuarioRoutes)
+app.use('/api/usuarios', usuariosRoutes)
 
 // listen for requests
 app.listen(port, () => {
