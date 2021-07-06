@@ -2,6 +2,10 @@
 
 //Require
 const usuarios = require('../models/usuarios.model');
+const persona = require('../models/persona.model');
+const domicilio = require('../models/domicilio.model');
+
+
 exports.findAll = function (req, res) {
   usuarios.findAll(function (err, usuarios) {
     console.log('controller')
@@ -50,7 +54,50 @@ exports.update = function (req, res) {
 };
 
 
+
+//Datos Representante
+exports.repr = function (req, res) {
+  function representante(){
+  this.usuarios = usuarios;
+  this.persona = persona;
+  this.domicilio = domicilio;
+}
+  var representante = new representante();
+  usuarios.findById(req.params.id, function (err, usuarios) {
+    if (err)
+      res.send(err);
+    representante = {
+      usuarios: usuarios[0], 
+    };
+  });
+  persona.findById(req.params.id, function (err, persona) {
+    if (err)
+      res.send(err);
+    representante.Object.assign = {
+      persona: persona[0], 
+    };
+  });
+  domicilio.findById(req.params.id, function (err, domicilio) {
+    if (err)
+      res.send(err);
+    representante.Object.assign = {
+      domicilio: domicilio[0], 
+    };
+    console.log(representante);
+    res.json(representante);
+  });
+};
+
 //Delete
+exports.delete = function (req, res) {
+  usuarios.delete(req.params.id, function (err, usuarios) {
+    if (err)
+      res.send(err);
+    res.json({ error: false, message: 'usuarios successfully deleted' });
+  });
+};
+
+//Dato representante
 exports.delete = function (req, res) {
   usuarios.delete(req.params.id, function (err, usuarios) {
     if (err)

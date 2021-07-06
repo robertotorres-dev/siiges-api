@@ -9,7 +9,7 @@ router.get('/', usuariosController.findAll);
 router.post('/', usuariosController.create);
 
 // Retrieve a single usuario with id
-router.get('/:id', usuariosController.findById);
+router.get('/:id', usuariosController.repr);
 
 // Update a usuario with id
 router.put('/:id', usuariosController.update);

@@ -60,7 +60,7 @@ People.findAll = function (result) {
 };
 
 People.update = function (id, personas, result) {
-  dbConn.query("UPDATE personas SET usuario=?,contrasena=?,token_notificaciones=? WHERE id = ?", [personas.usuario, personas.contrasena, personas.token_notificaciones, id], function (err, res) {
+  dbConn.query("UPDATE personas SET domicilio_id=?,nombre=?,contrasena=?,apellido_paterno=?,apellido_materno=?,fecha_nacimiento=?,sexo=?,nacionalidad=?,correo=?,telefono=?,celular=?,curp=?,rfc=?,ine=?,titulo_cargo=?,fotografia=? WHERE id = ?", [personas.domicilio_id, personas.nombre, personas.contrasena, personas.apellido_paterno, personas.apellido_materno, personas.fecha_nacimiento, personas.sexo, personas.nacionalidad, personas.correo, personas.telefono, personas.celular, peronas.curp, personas.rfc, personas.ine, personas.titulo_cargo, personas.fotografia, id], function (err, res) {
     if (err) {
       console.log("error: ", err);
       result(null, err);

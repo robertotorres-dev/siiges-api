@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 });
 
 // Require routes
-const usuariosRoutes = require('./src/routes/usuario.usuarios.route')
+const usuariosRoutes = require('./src/routes/usuarios.route')
 
 // using as middleware
 app.use('/api/usuarios', usuariosRoutes)
