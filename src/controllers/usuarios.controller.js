@@ -2,10 +2,51 @@
 
 //Require
 const usuarios = require('../models/usuarios.model');
-const persona = require('../models/persona.model');
-const domicilio = require('../models/domicilio.model');
+const personas = require('../models/persona.model');
+const domicilios = require('../models/domicilio.model');
 
 
+//Datos Representante
+exports.datosRepresentante = function (req, res) {
+  function representante() {
+    this.usuario = usuarios;
+    this.persona = personas;
+    this.domicilio = domicilios;
+  }
+  //Datos del usuario por id
+  usuarios.findById(req.params.id, function (err, usuario) {
+    if (err)
+      res.send(err);
+    const usuario_representante = usuario[0];
+
+    //Datos de persona con parametro de usuarios
+    personas.findById(usuario_representante.persona_id, function (err, persona) {
+      if (err)
+        res.send(err);
+      const persona_representante = persona[0];
+
+      //Datos de domicilio con parametro de persona    
+      domicilios.findById(persona_representante.domicilio_id, function (err, domicilio) {
+        if (err)
+          res.send(err);
+        const domicilio_representante = domicilio[0];
+
+        //Objeto a retornar
+        const representante = {
+          usuario: usuario_representante,
+          persona: persona_representante,
+          domicilio: domicilio_representante,
+        };
+
+        //Envio de respuesta
+        res.json(representante);
+      });
+    });
+  });
+};
+
+
+//FindAll
 exports.findAll = function (req, res) {
   usuarios.findAll(function (err, usuarios) {
     console.log('controller')
@@ -53,51 +94,7 @@ exports.update = function (req, res) {
   }
 };
 
-
-
-//Datos Representante
-exports.repr = function (req, res) {
-  function representante(){
-  this.usuarios = usuarios;
-  this.persona = persona;
-  this.domicilio = domicilio;
-}
-  var representante = new representante();
-  usuarios.findById(req.params.id, function (err, usuarios) {
-    if (err)
-      res.send(err);
-    representante = {
-      usuarios: usuarios[0], 
-    };
-  });
-  persona.findById(req.params.id, function (err, persona) {
-    if (err)
-      res.send(err);
-    representante.Object.assign = {
-      persona: persona[0], 
-    };
-  });
-  domicilio.findById(req.params.id, function (err, domicilio) {
-    if (err)
-      res.send(err);
-    representante.Object.assign = {
-      domicilio: domicilio[0], 
-    };
-    console.log(representante);
-    res.json(representante);
-  });
-};
-
 //Delete
-exports.delete = function (req, res) {
-  usuarios.delete(req.params.id, function (err, usuarios) {
-    if (err)
-      res.send(err);
-    res.json({ error: false, message: 'usuarios successfully deleted' });
-  });
-};
-
-//Dato representante
 exports.delete = function (req, res) {
   usuarios.delete(req.params.id, function (err, usuarios) {
     if (err)
